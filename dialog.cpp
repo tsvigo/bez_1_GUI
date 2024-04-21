@@ -90,7 +90,7 @@ b:
         {
             // sigpe арифметическое исключение: (СИНАПСЫ бЫЛИ 0 ДЕление на 0)
             list_of_neurons[var]=list_of_neurons[var]-  (list_of_neurons[neuron_index]/ list_of_synapses[synapse_index]); // + на -   
-        }
+        } // вычитаем нейроны
     }
     
     for (int   neuron_index = 100, synapse_index = 10000; neuron_index < 200;   ++neuron_index, ++synapse_index)
@@ -126,6 +126,7 @@ e:             // TODO: тут видимо менять условия - кра
     if (variable_synapse_index_counter>0//<10100
         )
         variable_synapse_index_counter=variable_synapse_index_counter-1;
+        // с конца прибавляем по 1: int variable_synapse_index_counter=10100;
                                          //+1;  // TODO: поменять начальный индекс на максимум и вычитать по 1
     else
         variable_synapse_index_counter=10100;
