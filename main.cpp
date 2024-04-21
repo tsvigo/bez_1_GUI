@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-     a.setWindowIcon(QIcon("/home/viktor/Загрузки/Иконка компьютерной программы -Без 1 - 4..png"));
+     a.setWindowIcon(QIcon("/mnt/97d838cf-b3a1-4c1d-9c9d-cf745cf3116a/загрузки/not-1-.svg"));
     Dialog w;
     w.show();
     return a.exec();
