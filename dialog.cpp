@@ -42,6 +42,8 @@ Dialog::Dialog(QWidget *parent)
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// загрузка нейронов и сигнала из файла в вектор ///////////////////////////////////////////////////////////////////////////////////////
+//  std::vector<unsigned long long>  list_of_neurons(250, 0);
+/// 
     std::ifstream is(
         
      //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0/neyroni_i_signal.txt"
@@ -49,8 +51,9 @@ Dialog::Dialog(QWidget *parent)
         // FIXME: тут же файлы надо менять!
         //NOTE: сигналы 1; считывание в вектор нейронов и сигналов из файла (НАДО Менять для подстройки)
         );
-    std::istream_iterator<unsigned long long> start(is), end;
-    std::vector<unsigned long long> list_of_neurons(start, end); 
+        std::vector<unsigned long long> list_of_neurons(250, 0ULL);
+    std::istream_iterator<unsigned long long> start(is), end;  // end
+   // std::vector<unsigned long long> list_of_neurons(start, end);   // end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///////////////////////////////////// загрузка синапсов из файла в вектор //////////////////////////////////////////////////////////////////////////////////////////
@@ -80,8 +83,7 @@ Dialog::Dialog(QWidget *parent)
     std::cout << "list_of_neurons[200]  = " << list_of_neurons[200]  << std::endl;
 b:
     ///
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// 
@@ -166,23 +168,22 @@ d:
                 /// тут надо записать сигнал и нейроны в файл
                 ///
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                fstream file3;
-                file3.open(
-                    // NOTE: сигналы 2
-                                        // 3:
-                    // FIXME: файлы надо менять!
-                    Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
-                 //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0-2/neurons_and_signal.txt"
-                   ,ios_base::out);
+//                fstream file3;
+//                file3.open(
+//                    // NOTE: сигналы 2
+//                                        // 3:
+//                    // FIXME: файлы надо менять!
+//                    Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
+//                 //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0-2/neurons_and_signal.txt"
+//                   ,ios_base::out);
                 
-                vector<unsigned long long>::iterator itr2;
+//                vector<unsigned long long>::iterator itr2;
                 
-                for(itr2=list_of_neurons.begin();itr2!=list_of_neurons.end();itr2++)
-               {
-                  file3<<*itr2<<endl;
-                }
+//for (itr2=list_of_neurons.begin(); itr2 != list_of_neurons.begin() + 250; ++itr2) {
+//    file3 << *itr2 << endl;
+//}
                 
-             file3.close();
+//             file3.close();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 ///  
                 QProcess().execute("/home/viktor/my_scripts_2/zvuk.sh");                
