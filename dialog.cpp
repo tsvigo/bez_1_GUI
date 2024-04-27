@@ -54,7 +54,10 @@ Dialog::Dialog(QWidget *parent)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///////////////////////////////////// загрузка синапсов из файла в вектор //////////////////////////////////////////////////////////////////////////////////////////
-    std::ifstream is2("/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4");
+    std::ifstream is2(
+  //  "/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4"
+  "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
+    );
     std::istream_iterator<unsigned long long> start2(is2), end2;
     std::vector<unsigned long long> list_of_synapses(start2, end2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,8 +137,11 @@ e:             // TODO: тут видимо менять условия - кра
             //=0;
     goto b;
 d:
+// записываем вектор синапсов в файл
     fstream file;
-    file.open("/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4",ios_base::out);
+    file.open(
+       "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
+    ,ios_base::out);
     
     vector<unsigned long long>::iterator itr;
     
@@ -159,24 +165,24 @@ d:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 /// тут надо записать сигнал и нейроны в файл
                 ///
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 fstream file3;
                 file3.open(
                     // NOTE: сигналы 2
                                         // 3:
                     // FIXME: файлы надо менять!
-                      Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
+                    Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
                  //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0-2/neurons_and_signal.txt"
-                    ,ios_base::out);
+                   ,ios_base::out);
                 
                 vector<unsigned long long>::iterator itr2;
                 
                 for(itr2=list_of_neurons.begin();itr2!=list_of_neurons.end();itr2++)
-                {
-                    file3<<*itr2<<endl;
+               {
+                  file3<<*itr2<<endl;
                 }
                 
-                file3.close();
+             file3.close();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 ///  
                 QProcess().execute("/home/viktor/my_scripts_2/zvuk.sh");                
