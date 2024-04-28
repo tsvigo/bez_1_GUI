@@ -37,7 +37,7 @@ Dialog::Dialog(QWidget *parent)
 /// Сначала укажем какой файл с нейронами подстроить. По-хорошему потом его надо считывать от функции решения 2
      Nazvaniye_fayla_s_neyronami_i_signalom = QFileDialog::getOpenFileName(this,
        tr("Открыть файл neyroni_i_signal.txt без 1 который надо подстроить."), 
-       "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly", tr("Text Files (*.txt)"));
+       "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/", tr("Text Files (*.txt)"));
     
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
