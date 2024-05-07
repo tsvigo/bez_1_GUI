@@ -43,20 +43,35 @@ Dialog::Dialog(QWidget *parent)
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// загрузка нейронов и сигнала из файла в вектор ///////////////////////////////////////////////////////////////////////////////////////
-//  std::vector<unsigned long long>  list_of_neurons(250, 0);
-/// 
-    std::ifstream is(
-        
-     //   "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/0/neyroni_i_signal.txt"
-    Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
-        // FIXME: тут же файлы надо менять!
-        //NOTE: сигналы 1; считывание в вектор нейронов и сигналов из файла (НАДО Менять для подстройки)
-        );
-        std::vector<unsigned long long> list_of_neurons(250, 0ULL);
-    std::istream_iterator<unsigned long long> start(is), end;  // end
-   // std::vector<unsigned long long> list_of_neurons(start, end);   // end
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///
+////  std::vector<unsigned long long>  list_of_neurons(250, 0);
+///// 
+//    std::ifstream is(
+//          Nazvaniye_fayla_s_neyronami_i_signalom.toStdString().c_str() 
+//        );
+//        std::vector<unsigned long long> list_of_neurons(250, 0ULL);
+//    std::istream_iterator<unsigned long long> start(is), end;  // end
+//########################################################################################################
+ //########################################################################################################
+
+std::vector<unsigned long long> list_of_neurons;
+
+//void loadFromFile(const QString& fileName) 
+//QString Nazvaniye_fayla_s_neyronami_i_signalom="/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/7/neurons_and_signal.txt";
+const QString& fileName=Nazvaniye_fayla_s_neyronami_i_signalom;
+{
+    std::ifstream file(fileName.toStdString().c_str());
+    if (file.is_open()) {
+        unsigned long long value;
+        while (file >> value) {
+            list_of_neurons.push_back(value);
+        }
+        file.close();
+    } else {
+        qDebug() << "Unable to open file: " << fileName;
+    }
+}
+//########################################################################################################   
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// загрузка синапсов из файла в вектор //////////////////////////////////////////////////////////////////////////////////////////
     std::ifstream is2(
   //  "/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4"
@@ -169,9 +184,9 @@ d:
                 /// тут надо записать сигнал и нейроны в файл
 //########################################################################################################
 
-// Создаем файл для записи вектора
-QString fileName = Nazvaniye_fayla_s_neyronami_i_signalom; // имя файла для записи вектора
-QFile file2(fileName);
+ //Создаем файл для записи вектора
+QString fileName2 = Nazvaniye_fayla_s_neyronami_i_signalom; // имя файла для записи вектора
+QFile file2(fileName2);
 if (file2.open(QFile::WriteOnly | QFile::Text)) {
     QTextStream out(&file2);
     for (unsigned long long neuron : list_of_neurons) {
@@ -181,13 +196,13 @@ if (file2.open(QFile::WriteOnly | QFile::Text)) {
 } else {
     qDebug() << "Error: unable to open file for writing";
 }
-
+   ////////////////
 // Записываем название файла в другой файл
 QString configFile = "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/noveyshie_neyrony_i_signal.txt";
 QFile configFileHandle(configFile);
 if (configFileHandle.open(QFile::WriteOnly | QFile::Text)) {
     QTextStream out(&configFileHandle);
-    out << fileName << "\n";
+    out << fileName2 << "\n";
     configFileHandle.close();
 } else {
     qDebug() << "Error: unable to open config file for writing";
