@@ -13,6 +13,7 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QFileDialog>
+#include <QDebug>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief Dialog::Dialog
 /// \param parent
@@ -37,7 +38,7 @@ Dialog::Dialog(QWidget *parent)
 /// Сначала укажем какой файл с нейронами подстроить. По-хорошему потом его надо считывать от функции решения 2
      Nazvaniye_fayla_s_neyronami_i_signalom = QFileDialog::getOpenFileName(this,
        tr("Открыть файл neyroni_i_signal.txt без 1 который надо подстроить."), 
-       "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji/", tr("Text Files (*.txt)"));
+       "/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/", tr("Text Files (*.txt)"));
     
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +72,7 @@ Dialog::Dialog(QWidget *parent)
         
         std::cout << "Программа считает что это 1." << std::endl;
     }
-    else {        std::cout << "Программа считает что это не 1." << std::endl;    }
+    else {        std::cout << "Программа считает что это не 1." << std::endl;   goto d;  }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // если ошибки нет то на выход
     if (variable_error>=0) // тут видимо надо менять на если ошибка = или > то на выход то есть ошибка пропадает если становится > 0
@@ -166,7 +167,32 @@ d:
             else {        std::cout << "Программа считает что это не 1." << std::endl;    } //  меняем на это не 1
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 /// тут надо записать сигнал и нейроны в файл
-                ///
+//########################################################################################################
+
+// Создаем файл для записи вектора
+QString fileName = Nazvaniye_fayla_s_neyronami_i_signalom; // имя файла для записи вектора
+QFile file2(fileName);
+if (file2.open(QFile::WriteOnly | QFile::Text)) {
+    QTextStream out(&file2);
+    for (unsigned long long neuron : list_of_neurons) {
+        out << neuron << "\n";
+    }
+    file2.close();
+} else {
+    qDebug() << "Error: unable to open file for writing";
+}
+
+// Записываем название файла в другой файл
+QString configFile = "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/noveyshie_neyrony_i_signal.txt";
+QFile configFileHandle(configFile);
+if (configFileHandle.open(QFile::WriteOnly | QFile::Text)) {
+    QTextStream out(&configFileHandle);
+    out << fileName << "\n";
+    configFileHandle.close();
+} else {
+    qDebug() << "Error: unable to open config file for writing";
+}
+//########################################################################################################
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                fstream file3;
 //                file3.open(
