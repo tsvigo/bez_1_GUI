@@ -55,8 +55,6 @@ Dialog::Dialog(QWidget *parent)
 
 std::vector<unsigned long long> list_of_neurons;
 
-//void loadFromFile(const QString& fileName) 
-//QString Nazvaniye_fayla_s_neyronami_i_signalom="/home/viktor/my_projects_qt_2/Sgenerirovannye_fayly/peyzaji_2/7/neurons_and_signal.txt";
 const QString& fileName=Nazvaniye_fayla_s_neyronami_i_signalom;
 {
     std::ifstream file(fileName.toStdString().c_str());
@@ -73,12 +71,32 @@ const QString& fileName=Nazvaniye_fayla_s_neyronami_i_signalom;
 //########################################################################################################   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// загрузка синапсов из файла в вектор //////////////////////////////////////////////////////////////////////////////////////////
-    std::ifstream is2(
-  //  "/home/viktor/my_projects_qt_2/cycle_of_distinguishing_a_one_with_vectors/synapses.txt-4"
-  "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
-    );
-    std::istream_iterator<unsigned long long> start2(is2), end2;
-    std::vector<unsigned long long> list_of_synapses(start2, end2);
+//    std::ifstream is2(
+
+//  "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
+//    );
+//    std::istream_iterator<unsigned long long> start2(is2), end2;
+//    std::vector<unsigned long long> list_of_synapses(start2, end2);
+//########################################################################################################
+//########################################################################################################
+std::vector<unsigned long long> list_of_synapses;
+    QFile file(  "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt");
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        throw std::runtime_error("Failed to open file");
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        bool ok;
+        unsigned long long synaps = line.toULongLong(&ok);
+        if (!ok) {
+            throw std::runtime_error("Invalid synaps value in file");
+        }
+        list_of_synapses.push_back(synaps);
+    }
+
+    file.close();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        variable_error     =   1073741824-list_of_neurons[200] ;
     
@@ -139,7 +157,7 @@ b:
 e:             // TODO: тут видимо менять условия - края и не -1 а +1
     if (list_of_synapses[variable_synapse_index_counter] < 2147483646 ) // < 2147483646 или > 1
         list_of_synapses[variable_synapse_index_counter]  =  list_of_synapses[variable_synapse_index_counter]+1;  // +1 или -1
-    
+goto b;     // FIXME: отладка
     if (list_of_synapses[variable_synapse_index_counter] ==2147483646) //  == 2147483646 или 1
     {
         variable_synapse_index_counter = variable_synapse_index_counter-1;
@@ -159,19 +177,34 @@ d:
 //########################################################################################################
 // записываем вектор синапсов в файл
 
-    fstream file;
-    file.open(
-       "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
-    ,ios_base::out);
+//    fstream file;
+//    file.open(
+//       "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
+//    ,ios_base::out);
     
-    vector<unsigned long long>::iterator itr;
+//    vector<unsigned long long>::iterator itr;
     
-    for(itr=list_of_synapses.begin();itr!=list_of_synapses.end();itr++)
-    {
-        file<<*itr<<endl;
+//    for(itr=list_of_synapses.begin();itr!=list_of_synapses.end();itr++)
+//    {
+//        file<<*itr<<endl;
+//    }
+    
+//    file.close();
+//########################################################################################################  
+//std::for_each(list_of_synapses.begin(), list_of_synapses.end(),
+//              [](unsigned long long& x) { x -= 1; });
+//########################################################################################################  
+     QFile file2( "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt");
+    if (!file2.open(QFile::WriteOnly | QFile::Text)) {
+        throw std::runtime_error("Failed to open file");
     }
-    
-    file.close();
+
+    QTextStream out(&file2);
+    for (unsigned long long synapse : list_of_synapses) {
+        out << synapse << "\n";
+    }
+
+    file2.close();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::cout << "The error has disappeared. Variable error = " << variable_error<< ". Это выход. "<<std::endl;
             std::cout << "list_of_neurons[200] = " << list_of_neurons[200]<< std::endl;
