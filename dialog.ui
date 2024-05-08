@@ -13,6 +13,16 @@
   <property name="windowTitle">
    <string>bez_1_GUI_Dialog</string>
   </property>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>30</y>
+     <width>201</width>
+     <height>531</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

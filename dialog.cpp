@@ -120,6 +120,7 @@ b:
         list_of_neurons[200] = list_of_neurons[200] - (list_of_neurons[neuron_index] / list_of_synapses[synapse_index]); // + на -
     }
    variable_error     = 1073741824-  list_of_neurons[200] ; // WARNING: изменение
+//########################################################################################################   
   //  variable_error     = list_of_neurons[200]-1073741824 ;
     
      std::cout << "variable_error = " << variable_error<< std::endl;
@@ -155,7 +156,9 @@ e:             // TODO: тут видимо менять условия - кра
             //=0;
     goto b;
 d:
+//########################################################################################################
 // записываем вектор синапсов в файл
+
     fstream file;
     file.open(
        "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/synapses.txt"
@@ -185,24 +188,25 @@ d:
 //########################################################################################################
 
  //Создаем файл для записи вектора
-QString fileName2 = Nazvaniye_fayla_s_neyronami_i_signalom; // имя файла для записи вектора
-QFile file2(fileName2);
-if (file2.open(QFile::WriteOnly | QFile::Text)) {
-    QTextStream out(&file2);
-    for (unsigned long long neuron : list_of_neurons) {
-        out << neuron << "\n";
-    }
-    file2.close();
-} else {
-    qDebug() << "Error: unable to open file for writing";
-}
+//QString fileName2 = Nazvaniye_fayla_s_neyronami_i_signalom; // имя файла для записи вектора
+//QFile file2(fileName2);
+//if (file2.open(QFile::WriteOnly | QFile::Text)) {
+//    QTextStream out(&file2);
+//    for (unsigned long long neuron : list_of_neurons) {
+//        out << neuron << "\n";
+//    }
+//    file2.close();
+//} else {
+//    qDebug() << "Error: unable to open file for writing";
+//}
    ////////////////
 // Записываем название файла в другой файл
 QString configFile = "/home/viktor/my_projects_qt_2/Funktsiya_Resheniya_2/noveyshie_neyrony_i_signal.txt";
 QFile configFileHandle(configFile);
 if (configFileHandle.open(QFile::WriteOnly | QFile::Text)) {
     QTextStream out(&configFileHandle);
-    out << fileName2 << "\n";
+   // out << fileName2 << "\n";
+     out << Nazvaniye_fayla_s_neyronami_i_signalom << "\n";
     configFileHandle.close();
 } else {
     qDebug() << "Error: unable to open config file for writing";
@@ -231,7 +235,15 @@ if (configFileHandle.open(QFile::WriteOnly | QFile::Text)) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 ////////////////////// eND Dialog ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// /      
+//########################################################################################################
+
+QString text;
+for (const auto& synapse : list_of_synapses) {
+    text += QString::number(synapse) + "\n";
+}
+
+ui->textEdit->setPlainText(text);
+//########################################################################################################     
 }
 
 Dialog::~Dialog()
